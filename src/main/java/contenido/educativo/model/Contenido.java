@@ -34,7 +34,4 @@ public class Contenido {
     private boolean deprecado;
     private String nivelCurso;
 
-
-
-
 }

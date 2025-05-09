@@ -22,8 +22,6 @@ public class ContenidoServicio {
 
     public Contenido buscarId(Long id) {
         return contenidoRepository.findById(id).get();
-
-
     }
 
     public Contenido guardar(Contenido contenido) {
