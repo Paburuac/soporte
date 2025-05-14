@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 
 Wallet_FullStackI/
+.env
 
 ### STS ###
 .apt_generated
@@ -19,7 +20,7 @@ Wallet_FullStackI/
 .idea
 *.iws
 *.iml
-*.ipr
+*.iprgit 
 
 ### NetBeans ###
 /nbproject/private/
