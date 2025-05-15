@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @Data
 @AllArgsConstructor @NoArgsConstructor
-public class Contenido {
+public class Soporte {
     //nombre, tipo archivo, fecha creacion, fecha modificacion, tipo de curso, URL (ubicacion), booleano(deprecado, obsoleto), nivel curso
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) 

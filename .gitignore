@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 
 Wallet_FullStackI/
+src/wallet
 .env
 
 ### STS ###
