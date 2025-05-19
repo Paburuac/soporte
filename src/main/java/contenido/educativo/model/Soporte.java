@@ -16,22 +16,18 @@ public class Soporte {
     //nombre, tipo archivo, fecha creacion, fecha modificacion, tipo de curso, URL (ubicacion), booleano(deprecado, obsoleto), nivel curso
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private Long IdContenido; 
+    private Long IdSoporte; 
 
     private String nombre;
 
     @Column(unique=true, nullable=false)
     private String correo;
 
-    private String tipoArchivo;
+    private String TipoConsulta;
     private LocalDate fechaCreacion;
-    private LocalDate fechaModificacion;
-    private String tipoCurso;
+    private LocalDate fechaFinalizacion;
     
     @Column(unique=true, nullable=false)
     private String url;
-
-    private boolean deprecado;
-    private String nivelCurso;
 
 }
