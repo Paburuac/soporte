@@ -7,6 +7,7 @@ target/
 Wallet_FullStackI/
 src/wallet
 .env
+docker-compose.yml
 
 ### STS ###
 .apt_generated
