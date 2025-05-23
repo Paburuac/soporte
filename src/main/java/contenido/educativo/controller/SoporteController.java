@@ -6,8 +6,12 @@ import contenido.educativo.model.Soporte;
 import contenido.educativo.servicio.SoporteServicio;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,22 +33,48 @@ public class SoporteController {
     }
 
     @PostMapping
-    public Soporte guardarContenido(@RequestBody Soporte soporte) {
-        return SoporteServicio.guardar(soporte);
+    public ResponseEntity<?> guardarContenido(@RequestBody Soporte soporte) {
+        try {
+            Soporte soporteGuardado = SoporteServicio.guardar(soporte);
+            return ResponseEntity.status(HttpStatus.CREATED).body(soporteGuardado);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Correo o URL ya están registrados.");
+        }
     }
 
     @GetMapping("/id/{id}")
-    public Soporte buscarPorId(@PathVariable Long id) {
-        return SoporteServicio.buscarId(id);
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        Optional<Soporte> soporteOptional = SoporteServicio.buscarId(id);
+
+        if (soporteOptional.isPresent()) {
+            return ResponseEntity.ok(soporteOptional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping
-    public Soporte actualizarPorId(@RequestBody Soporte soporte) {
-        return SoporteServicio.actualizar(soporte);
+    public ResponseEntity<Soporte> actualizarPorId(@RequestBody Soporte soporte) {
+        if (soporte.getIdSoporte() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Soporte soporteActualizado = SoporteServicio.actualizar(soporte);
+        
+        if (soporteActualizado == null) {
+            return ResponseEntity.notFound().build(); // Si no se encontró en DB
+        }
+        return ResponseEntity.ok(soporteActualizado);
     }
 
     @DeleteMapping
-    public void borrarSoporte(@RequestBody Soporte soporte) {
-        SoporteServicio.borrar(soporte);
+    public ResponseEntity<Void> borrarSoporte(@RequestBody Soporte soporte) {
+        try{
+            SoporteServicio.borrar(soporte);
+            return ResponseEntity.noContent().build();
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
